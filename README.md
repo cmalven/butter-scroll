@@ -18,10 +18,17 @@ node_modules/*
 !node_modules/butter-scroll/index.js
 ```
 
-Finally, you'll need to add the following to the `dependencies` section of your `package.json`:
+Finally, you'll need to add the following to the `dependencies` section of your `package.json`…
 
 ```
 "butter-scroll": "file:node_modules/butter-scroll"
+```
+
+…and then manually install the dependencies for `butter-scroll`:
+
+```
+cd cd your/project-location/node_modules/butter-scroll
+npm install
 ```
 
 ### Other required libraries
