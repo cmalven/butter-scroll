@@ -1,0 +1,14 @@
+{
+  "name": "butter-scroll",
+  "version": "0.0.1",
+  "description": "Simple, effective, progressively-enhanced, buttery-smooth scrolling.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chris Malven",
+  "license": "ISC",
+  "dependencies": {
+    "lodash.throttle": "^4.1.1"
+  }
+}
