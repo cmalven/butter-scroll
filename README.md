@@ -18,6 +18,12 @@ node_modules/*
 !node_modules/butter-scroll/index.js
 ```
 
+Finally, you'll need to add the following to the `dependencies` section of your `package.json`:
+
+```
+"butter-scroll": "file:node_modules/butter-scroll"
+```
+
 ### Other required libraries
 
 The long-term goal is to remove these dependencies, but for now Butter Scroll won't work if they aren't loaded.
