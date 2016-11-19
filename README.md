@@ -4,21 +4,18 @@ Simple, effective, progressively-enhanced, buttery-smooth scrolling.
 
 ## Installation
 
-Until butter scroll is on npm, I'd recommend cloning this repo locally and doing the following:
+Until butter scroll is on npm, I recommend cloning this repo locally into your project's `node_modules` directory.
 
 ```
-cd butter-scroll
-npm link
-cd your/project/directory
-npm link butter-scroll
+cd your/project-location/node_modules
+git clone git@github.com:cmalven/butter-scroll.git
 ```
 
-Then add the following to your `.gitignore`
+Then make the following change to your project's `.gitignore`
 
 ```
 node_modules/*
-node_modules/butter-scroll/node_modules
-!node_modules/butter-scroll
+!node_modules/butter-scroll/index.js
 ```
 
 ### Other required libraries
