@@ -14,31 +14,17 @@ This project is still in its very early stages. If you're not willing to read th
 
 ### via git
 
-If you want to be able to easily pull the latest bleeding-edge butter-scroll code into your project frequently, I recommend cloning this repo locally into your project's `node_modules` directory.
+If you want to be able to easily pull the latest bleeding-edge butter-scroll code into your project frequently, I recommend cloning this repo and using a local path in your `package.json` to pull the file in.
 
 ```
-cd your/project-location/node_modules
 git clone git@github.com:cmalven/butter-scroll.git
-```
-
-Then make the following change to your project's `.gitignore`
-
-```
-node_modules/*
-!node_modules/butter-scroll/index.js
 ```
 
 Finally, you'll need to add the following to the `dependencies` section of your `package.json`…
 
 ```
-"butter-scroll": "file:node_modules/butter-scroll"
-```
-
-…and then manually install the dependencies for `butter-scroll`:
-
-```
-cd your/project-location/node_modules/butter-scroll
-npm install
+# Assumes that butter-scroll is cloned into a directory alongside your project directory
+"butter-scroll": "file:../butter-scroll"
 ```
 
 ### Other required libraries
