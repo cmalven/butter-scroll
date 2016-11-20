@@ -2,6 +2,10 @@
 
 Simple, effective, progressively-enhanced, buttery-smooth scrolling.
 
+## Warning
+
+This project is still in its very early stages. If you're not willing to read the source or come up with clever workarounds for bizarre behavior, it's probably not for you.
+
 ## Installation
 
 Until butter scroll is on npm, I recommend cloning this repo locally into your project's `node_modules` directory.
