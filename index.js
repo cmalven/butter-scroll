@@ -57,7 +57,8 @@ module.exports = function(options) {
     _configure();
     _addDepthItems();
     _addEventListeners();
-    _handleDepth();
+    _setDepth();
+    _completeDepthOffsets();
     window.requestAnimationFrame(_update);
   };
 
@@ -90,7 +91,9 @@ module.exports = function(options) {
         $el: $(this),
         depth: depth,
         topOffset: $(this).offset().top,
-        percentageDepth: depth / self.maxDepth
+        percentageDepth: depth / self.maxDepth,
+        currentOffset: 0,
+        targetOffset: null
       }
       self.depthItems.push(item);
     });
@@ -108,6 +111,7 @@ module.exports = function(options) {
     if (Math.abs(self.targetScroll - self.currentScroll) < self.arrivalThreshold) {
       self.currentScroll = self.targetScroll;
       _setScroll(self.currentScroll);
+      _completeDepthOffsets();
       return self.isScrolling = false;
     }
 
@@ -117,7 +121,7 @@ module.exports = function(options) {
     _setScroll(self.currentScroll);
 
     // Offset each parallax piece individually
-    _handleDepth();
+    _updateDepth();
 
     // Request a new animation frame
     window.requestAnimationFrame(_update);
@@ -127,7 +131,7 @@ module.exports = function(options) {
     self.settings.$elToScroll[0].style[self.prefixedTransform] = `translateZ(0) translateY(${scrollPosition}px)`
   };
 
-  var _handleDepth = function() {
+  var _setDepth = function() {
     // Get the position of the browser window that we'll measure distance against
     var scrollOrigin = Math.abs(self.targetScroll) + ($(window).height() / 2);
     var maxDistance = $(window).height() * 2;
@@ -137,9 +141,35 @@ module.exports = function(options) {
       var item = self.depthItems[depthItemsLength];
       var distance = scrollOrigin - item.topOffset;
       var percentageDistance = distance / maxDistance;
-      var offset = Math.round(self.settings.maxDepthOffset * item.percentageDepth * percentageDistance * -1);
-      item.$el[0].style[self.prefixedTransform] = `translateY(${offset}px) translateZ(0)`;
+      item.targetOffset = Math.round(self.settings.maxDepthOffset * item.percentageDepth * percentageDistance * -1);
     }
+  };
+
+  var _updateDepth = function() {
+    var depthItemsLength = self.depthItems.length;
+    while (depthItemsLength--) {
+      var item = self.depthItems[depthItemsLength];
+      if (Math.abs(item.targetOffset - item.currentOffset) < item.arrivalThreshold) {
+        item.currentOffset = item.targetOffset;
+      } else {
+        var offset = (item.targetOffset - item.currentOffset) * self.settings.scrollEase;
+        item.currentOffset += offset;
+      }
+      _setDepthItemOffset(item, item.currentOffset);
+    }
+  };
+
+  var _completeDepthOffsets = function() {
+    var depthItemsLength = self.depthItems.length;
+    while (depthItemsLength--) {
+      var item = self.depthItems[depthItemsLength];
+      item.currentOffset = item.targetOffset;
+      _setDepthItemOffset(item, item.targetOffset);
+    }
+  };
+
+  var _setDepthItemOffset = function(item, offset) {
+    item.$el[0].style[self.prefixedTransform] = `translateY(${offset}px) translateZ(0)`;
   };
 
   var _onResize = function(evt) {
@@ -150,6 +180,9 @@ module.exports = function(options) {
   var _onScroll = function(evt) {
     var posY = $(window).scrollTop();
     self.targetScroll = Math.round(-posY);
+
+    // Update the target positions for parallax items
+    _setDepth();
 
     // If we weren't scrolling before, start scrolling
     // and request an animation frame
