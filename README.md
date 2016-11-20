@@ -8,7 +8,13 @@ This project is still in its very early stages. If you're not willing to read th
 
 ## Installation
 
-Until butter scroll is on npm, I recommend cloning this repo locally into your project's `node_modules` directory.
+### via npm
+
+`npm install butter-scroll --save`
+
+### via git
+
+If you want to be able to easily pull the latest bleeding-edge butter-scroll code into your project frequently, I recommend cloning this repo locally into your project's `node_modules` directory.
 
 ```
 cd your/project-location/node_modules
