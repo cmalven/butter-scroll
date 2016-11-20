@@ -27,7 +27,7 @@ Finally, you'll need to add the following to the `dependencies` section of your 
 …and then manually install the dependencies for `butter-scroll`:
 
 ```
-cd cd your/project-location/node_modules/butter-scroll
+cd your/project-location/node_modules/butter-scroll
 npm install
 ```
 
