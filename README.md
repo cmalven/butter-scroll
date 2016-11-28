@@ -90,3 +90,8 @@ new ButterScroll({
   maxDepthOffset: 500 // optional
 });
 ```
+
+
+## Dev
+
+`npm run build`: Builds production-ready files

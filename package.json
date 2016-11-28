@@ -1,14 +1,21 @@
 {
   "name": "butter-scroll",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "description": "Simple, effective, progressively-enhanced, buttery-smooth scrolling.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "butter_scroll.js",
   "author": "Chris Malven",
   "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "webpack": "^1.13.3"
+  },
   "dependencies": {
     "lodash.throttle": "^4.1.1"
+  },
+  "scripts": {
+    "build": "webpack"
   }
 }
