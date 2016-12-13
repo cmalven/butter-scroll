@@ -58,6 +58,8 @@ module.exports = function(options) {
     _configure();
     _addEventListeners();
     window.requestAnimationFrame(_update);
+
+    // Kickoff
     $(window).trigger('resize');
   };
 
@@ -90,7 +92,7 @@ module.exports = function(options) {
       var item = {
         $el: $(this),
         depth: depth,
-        topOffset: $(this).offset().top,
+        topOffset: $(this).offset().top - self.settings.$containerEl.offset().top,
         percentageDepth: depth / self.maxDepth,
         currentOffset: 0,
         targetOffset: null
@@ -102,8 +104,7 @@ module.exports = function(options) {
   var _addEventListeners = function() {
     $(window)
       .on('resize', throttle(_onResize, self.eventThrottleMs))
-      .on('scroll', throttle(_onScroll, self.eventThrottleMs))
-      .trigger('resize');
+      .on('scroll', throttle(_onScroll, self.eventThrottleMs));
   };
 
   var _update = function() {

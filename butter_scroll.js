@@ -114,6 +114,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _configure();
 	    _addEventListeners();
 	    window.requestAnimationFrame(_update);
+
+	    // Kickoff
 	    $(window).trigger('resize');
 	  };
 
@@ -146,7 +148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var item = {
 	        $el: $(this),
 	        depth: depth,
-	        topOffset: $(this).offset().top,
+	        topOffset: $(this).offset().top - self.settings.$containerEl.offset().top,
 	        percentageDepth: depth / self.maxDepth,
 	        currentOffset: 0,
 	        targetOffset: null
@@ -158,8 +160,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var _addEventListeners = function() {
 	    $(window)
 	      .on('resize', throttle(_onResize, self.eventThrottleMs))
-	      .on('scroll', throttle(_onScroll, self.eventThrottleMs))
-	      .trigger('resize');
+	      .on('scroll', throttle(_onScroll, self.eventThrottleMs));
 	  };
 
 	  var _update = function() {
