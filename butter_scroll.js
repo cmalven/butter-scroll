@@ -231,16 +231,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  var _onResize = function(evt) {
+	    _setScroll(0);
 	    var height = self.settings.$elToScroll.innerHeight();
 	    $('.scroller').height(height);
 	    _addDepthItems();
 	    _setDepth();
 	    _completeDepthOffsets();
+	    $(window).trigger('scroll');
 	  };
 
-	  var _onScroll = function(evt) {
+	  var _updateScrollPosition = function() {
 	    var posY = $(window).scrollTop();
 	    self.targetScroll = Math.round(-posY);
+	  }
+
+	  var _onScroll = function(evt) {
+	    _updateScrollPosition();
 
 	    // Update the target positions for parallax items
 	    _setDepth();

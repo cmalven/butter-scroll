@@ -1,6 +1,6 @@
 {
   "name": "butter-scroll",
-  "version": "0.0.1-alpha.5",
+  "version": "0.0.1-alpha.6",
   "description": "Simple, effective, progressively-enhanced, buttery-smooth scrolling.",
   "main": "butter_scroll.js",
   "author": "Chris Malven",
