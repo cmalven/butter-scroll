@@ -10,7 +10,6 @@ module.exports = function(options) {
   scrollEase          The ease at which the element will be scrolled into position
                       [Number] (optional)
   maxDepthOffset      The max amount of offset that the highest depth layer can have
-                      as a fraction of the window height
                       [Number] (optional)
   */
  
@@ -41,7 +40,7 @@ module.exports = function(options) {
  
   self.settings = $.extend({
     scrollEase: 0.15,
-    maxDepthOffset: 0.5
+    maxDepthOffset: 500
   }, options);
  
  
@@ -56,11 +55,11 @@ module.exports = function(options) {
 
     // Setup
     _configure();
+    _addDepthItems();
     _addEventListeners();
+    _setDepth();
+    _completeDepthOffsets();
     window.requestAnimationFrame(_update);
-
-    // Kickoff
-    $(window).trigger('resize');
   };
 
   var _configure = function() {
@@ -86,13 +85,12 @@ module.exports = function(options) {
   };
 
   var _addDepthItems = function() {
-    self.depthItems = [];
     $('*[data-' + self.depthAttr + ']').each(function() {
       var depth = $(this).data(self.depthAttr);
       var item = {
         $el: $(this),
         depth: depth,
-        topOffset: $(this).offset().top - self.settings.$containerEl.offset().top,
+        topOffset: $(this).offset().top,
         percentageDepth: depth / self.maxDepth,
         currentOffset: 0,
         targetOffset: null
@@ -104,7 +102,8 @@ module.exports = function(options) {
   var _addEventListeners = function() {
     $(window)
       .on('resize', throttle(_onResize, self.eventThrottleMs))
-      .on('scroll', throttle(_onScroll, self.eventThrottleMs));
+      .on('scroll', throttle(_onScroll, self.eventThrottleMs))
+      .trigger('resize');
   };
 
   var _update = function() {
@@ -134,7 +133,6 @@ module.exports = function(options) {
 
   var _setDepth = function() {
     // Get the position of the browser window that we'll measure distance against
-    var winHeight = $(window).height();
     var scrollOrigin = Math.abs(self.targetScroll) + ($(window).height() / 2);
     var maxDistance = $(window).height() * 2;
 
@@ -143,7 +141,7 @@ module.exports = function(options) {
       var item = self.depthItems[depthItemsLength];
       var distance = scrollOrigin - item.topOffset;
       var percentageDistance = distance / maxDistance;
-      item.targetOffset = Math.round((self.settings.maxDepthOffset * winHeight) * item.percentageDepth * percentageDistance * -1);
+      item.targetOffset = Math.round(self.settings.maxDepthOffset * item.percentageDepth * percentageDistance * -1);
     }
   };
 
@@ -175,22 +173,13 @@ module.exports = function(options) {
   };
 
   var _onResize = function(evt) {
-    _setScroll(0);
     var height = self.settings.$elToScroll.innerHeight();
     $('.scroller').height(height);
-    _addDepthItems();
-    _setDepth();
-    _completeDepthOffsets();
-    $(window).trigger('scroll');
   };
 
-  var _updateScrollPosition = function() {
+  var _onScroll = function(evt) {
     var posY = $(window).scrollTop();
     self.targetScroll = Math.round(-posY);
-  }
-
-  var _onScroll = function(evt) {
-    _updateScrollPosition();
 
     // Update the target positions for parallax items
     _setDepth();
