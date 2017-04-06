@@ -12,21 +12,6 @@ This project is still in its very early stages. If you're not willing to read th
 
 `npm install butter-scroll --save`
 
-### via git
-
-If you want to be able to easily pull the latest bleeding-edge butter-scroll code into your project frequently, I recommend cloning this repo and using a local path in your `package.json` to pull the file in.
-
-```
-git clone git@github.com:cmalven/butter-scroll.git
-```
-
-Finally, you'll need to add the following to the `dependencies` section of your `package.json`…
-
-```
-# Assumes that butter-scroll is cloned into a directory alongside your project directory
-"butter-scroll": "file:../butter-scroll"
-```
-
 ### Other required libraries
 
 The long-term goal is to remove these dependencies, but for now Butter Scroll won't work if they aren't loaded.
