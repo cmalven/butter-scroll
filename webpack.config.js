@@ -1,19 +1,21 @@
 module.exports = {
-  entry: './src/index.js',
+  entry: ['./src/index.js'],
   output: {
-    path: '.',
+    path: __dirname,
     filename: 'butter_scroll.js',
     library: 'ButterScroll',
     libraryTarget: 'umd'
   },
-  loaders: [
-    {
-      test: /\.js$/,
-      exclude: /(node_modules)/,
-      loader: 'babel',
-      query: {
-        presets: ['es2015', 'stage-2']
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'stage-2']
+        }
       }
-    }
-  ]
+    ]
+  }
 }
